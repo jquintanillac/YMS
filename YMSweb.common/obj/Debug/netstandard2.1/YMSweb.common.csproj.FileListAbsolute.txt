@@ -1,0 +1,10 @@
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\bin\Debug\netstandard2.1\YMSweb.common.deps.json
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\bin\Debug\netstandard2.1\YMSweb.common.dll
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\bin\Debug\netstandard2.1\YMSweb.common.pdb
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Debug\netstandard2.1\YMSweb.common.csproj.AssemblyReference.cache
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Debug\netstandard2.1\YMSweb.common.GeneratedMSBuildEditorConfig.editorconfig
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Debug\netstandard2.1\YMSweb.common.AssemblyInfoInputs.cache
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Debug\netstandard2.1\YMSweb.common.AssemblyInfo.cs
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Debug\netstandard2.1\YMSweb.common.csproj.CoreCompileInputs.cache
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Debug\netstandard2.1\YMSweb.common.dll
+D:\Proyectos Personales\PatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Debug\netstandard2.1\YMSweb.common.pdb

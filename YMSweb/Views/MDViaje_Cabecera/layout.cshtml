@@ -1,0 +1,257 @@
+﻿@{
+    ViewData["Title"] = "Viajes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var message = ViewBag.SuccessMsg;
+}
+<br />
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div id="general">
+            <div id="canales">
+                <div class="div-title">
+                    <h4 class="m-0">Canales</h4>
+                </div>
+                <div class="row m-0">
+                    @foreach (var item in ViewBag.canales)
+                    {
+                        @switch (item.can_esta)
+                        {
+                            case "A":
+                                <div class="card color-fondo-amarillo">
+                                    <label class="text-white">@item.can_cod</label>
+                                    <div class="card-body text-sm-left">
+                                        <div style="width: 10px; word-wrap: break-word; text-align: center" class="text-white">
+                                            <p><small>@item.nro_trans</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                break;
+                            case "R":
+                                <div class="card color-fondo-rojo">
+                                    <label class="text-white">@item.can_cod</label>
+                                    <div class="card-body text-sm-left">
+                                        <div style="width: 10px; word-wrap: break-word; text-align: center" class="text-white">
+                                            <p><small>@item.nro_trans</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                break;
+                            case "Z":
+                                <div class="card color-fondo-azul">
+                                    <label class="text-white">@item.can_cod</label>
+                                    <div class="card-body text-sm-left">
+                                        <div style="width: 10px; word-wrap: break-word; text-align: center" class="text-white">
+                                            <p><small>@item.nro_trans</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                break;
+                            default:
+                                <div class="card color-fondo-acept">
+                                    <label class="text-white">@item.can_cod</label>
+                                    <div class="card-body text-sm-center">
+                                        <div style="height: 190px">
+                                        </div>
+                                    </div>
+                                </div>
+                                break;
+                        }
+
+                        @*@if (item.can_act)
+                            {
+                                <div class="card color-fondo-deneg">
+                                    <label class="text-white">@item.id_canal</label>
+                                    <div class="card-body text-sm-left">
+                                        <div style="width: 10px; word-wrap: break-word; text-align: center" class="text-white">
+                                            <p><small>@item.nro_trans</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card color-fondo-acept">
+                                    <label class="text-white">@item.id_canal</label>
+                                    <div class="card-body text-sm-center">
+                                    </div>
+                                </div>
+                            }*@
+                    }
+                </div>
+            </div>
+            <br />
+            <div id="muelles">
+                <div class="div-title">
+                    <h4 class="m-0">Muelles</h4>
+                </div>
+                <div class="row m-0">
+                    @foreach (var item2 in ViewBag.muelles)
+                    {
+                        @if (item2.mue_act)
+                        {
+                            <div class="card color-fondo-deneg">
+                                <label class="text-white">@item2.mue_cod</label>
+                                <div class="card-body text-sm-left">
+                                    <img src="~/AdminLTE-master/img/Camionpng.png" class="rounded" alt="Cinque Terre" width="50" height="200" />
+                                    <div class="texto1" style="width: 2px; word-wrap: break-word; text-align: center">
+                                        <p><small>@item2.plac_desc</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card color-fondo-acept">
+                                <label class="text-white">@item2.mue_cod</label>
+                                <div class="card-body text-sm-center">
+                                    <div style="height: 190px">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                </div>
+            </div>
+            <div id="cuadrilla">
+                <div class="div-title">
+                    <h4 class="m-0">Cuadrilla</h4>
+                </div>
+                <div class="row m-0">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Cuadrilla
+                                </th>
+                                <th>
+                                    Placa
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item4 in ViewBag.cuadrilla)
+                            {
+                                <tr>
+                                    <td>
+                                        @item4.cua_desc
+                                    </td>
+                                    <td>
+                                        @if (item4.cua_act)
+                                        {
+                                            @item4.plac_desc
+                                        }
+                                        else
+                                        {
+                                            <p>Libre</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="estacionamientos">
+                <div class="div-title">
+                    <h4 class="m-0">Estacionamiento</h4>
+                </div>
+                <div class="row m-0">
+                    @foreach (var item3 in ViewBag.estacionamiento)
+                    {
+                        @if (item3.esta_act)
+                        {
+                            @if (@item3.plac_desc != "")
+                            {
+                                <div class="card color-fondo-deneg">
+                                    <label class="text-white">@item3.esta_cod</label>
+                                    <div class="card-body text-sm-left">
+                                        <img src="~/AdminLTE-master/img/Camionpng.png" class="rounded" alt="Cinque Terre" width="50" height="200" />
+                                        <div class="texto1" style="width: 2px; word-wrap: break-word; text-align: center">
+                                            <p><small>@item3.plac_desc</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card color-fondo-deneg">
+                                    <label class="text-white">@item3.esta_cod</label>
+                                    @*<a href="#" data-toggle="tooltip"  data-placement="top" title="">
+                                            <img src="~/AdminLTE-master/img/Camionpng.png" class="rounded" alt="Cinque Terre" width="50" height="200" />
+                                        </a>*@
+                                    <div class="card-body text-sm-left">                                       
+                                        <a href="#" data-toggle="tooltip" data-html="true" title="@item3.esta_obs">
+                                            <img src="~/AdminLTE-master/img/Camionpng.png" class="rounded" alt="Cinque Terre" width="50" height="200" />
+                                        </a>
+                                        <div class="texto1" style="width: 2px; word-wrap: break-word; text-align: center">
+                                            <p><small>Bloqueo</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="card color-fondo-acept">
+                                <label class="text-white">@item3.esta_cod</label>
+                                <div class="card-body text-sm-center">
+                                    <div style="height: 190px">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div id="anexos">
+                <div class="div-title">
+                    <h4 class="m-0">Anexos</h4>
+                </div>
+                <div class="row m-0">
+                    @foreach (var item4 in ViewBag.anexos)
+                    {
+                        @if (item4.anex_act)
+                        {
+                            <div class="card color-fondo-deneg">
+                                <label class="text-white">@item4.id_anexo</label>
+                                <div class="card-body text-sm-left">
+                                    <img src="~/AdminLTE-master/img/Camionpng.png" class="rounded" alt="Cinque Terre" width="50" height="200" />
+                                    <div class="texto1" style="width: 2px; word-wrap: break-word; text-align: center">
+                                        <p><small>@item4.plac_desc</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card color-fondo-acept">
+                                <label class="text-white">@item4.id_anexo</label>
+                                <div class="card-body text-sm-center">
+                                    <div style="height: 190px">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+<script type="text/javascript">
+    $(function () {
+        var mensaje = $("#esta_obs").val();
+        mensaje = $.trim(mensaje);
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+}

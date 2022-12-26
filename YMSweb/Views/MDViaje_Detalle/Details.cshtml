@@ -1,0 +1,61 @@
+﻿@model YMSweb.Data.Entities.MDViaje_Detalle
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MDViaje_Detalle</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_vijcab)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_vijcab)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_estcam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_estcam)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_muelle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_muelle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_canal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_canal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_cuadrilla)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_cuadrilla)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_estacionamiento)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_estacionamiento)
+        </dd>*@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.vijdet_est)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.vijdet_est)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id_vijdet">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

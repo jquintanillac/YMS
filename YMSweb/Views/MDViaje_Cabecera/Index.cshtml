@@ -1,0 +1,165 @@
+﻿@model YMSweb.Models.ViewModels.VMviajes
+
+@{
+    ViewData["Title"] = "Viajes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<br />
+<div class="container-fluid">
+    <div class="div-title">
+        <h4 class="m-0">REGISTRO DE VIAJES</h4>
+    </div>
+</div>
+<hr style="color: #0056b2" />
+<br />
+<br />
+<div class="container-fluid">
+    <table table id="tblviaje" class="table table-striped table-bordered" style="width: 100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.id_camplacab)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.placa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nro_Trans)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fec_gen)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.viajes)
+            {
+                <tr>
+                    <td>
+                        @item.id_camplacab
+                    </td>
+                    <td>
+                        @item.placa
+                    </td>
+                    <td>
+                        @item.Nro_Trans
+                    </td>
+                    <td>
+                        @item.Fec_gen
+                    </td>
+                    <td>
+                        <form asp-action="Index" asp-controller="MDViaje_Cabecera" method="post">
+                            <input type="hidden" name="placa" value="@item.placa" />
+                            <input type="hidden" name="id_camplacab" value="@item.id_camplacab"/>
+                            <input type="submit" value="Escoger" class="btn btn-info btn-sm" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<hr style="color: #0056b2" />
+<br />
+<div class="container-fluid">
+    <div class="div-title">
+        <h4 class="m-0">REGISTRO DE TRANSPORTES</h4>
+    </div>
+    <h2>Placa: @ViewData["placa"]</h2>
+</div>
+<div class="container-fluid">
+    <table table id="tbldetalle" class="table table-striped table-bordered" style="width: 100%">
+        <thead>
+            <tr>
+                <th class="d-none">
+                    Nro. Viaje
+                </th>
+                <th>
+                    Nro. Transporte
+                </th>
+                <th>
+                    Peso
+                </th>
+                <th>
+                    Volumen
+                </th>
+                <th>
+                    Tipo Transporte
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.viajedetalle)
+            {
+                <tr>
+                    <td class="d-none">
+                        @item.id_vijcab
+                    </td>
+                    <td>
+                        @item.campla_nrotrans
+                    </td>
+                    <td>
+                        @item.campla_peso
+                    </td>
+                    <td>
+                        @item.campla_volumen
+                    </td>
+                    <td>
+                        @item.tiptran_desc
+                    </td>
+                    <td>
+                        <a class='btn btn-info btn-sm text-white' asp-action="Validar" asp-controller="MDViaje_Detalle" asp-route-id="@item.id_vijcab">Validar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblviaje').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+            $('#tbldetalle').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+    </script>
+}

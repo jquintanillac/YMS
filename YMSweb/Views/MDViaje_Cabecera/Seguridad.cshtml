@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewData["Title"] = "Seguridad ingreso";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<br />
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["Error"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<br />
+<br />
+<div class="container">
+    <div class="card">
+        <div class="div-title">
+            <h4 class="m-0">SEGURIDAD - INGRESO DE UNIDAD</h4>
+        </div>
+        <div class="card-body">
+            <table table id="tblsegu" class="table table-striped table-bordered" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Nro. Viaje
+                        </th>
+                        <th>
+                            Placa
+                        </th>
+                        <th>
+                            Nro. Transportes
+                        </th>
+                        <th>
+                            Observaciones
+                        </th>
+                        <th>
+                            Operaciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.seguridad)
+                    {
+                        <tr>
+                            <td>
+                                @item.id_vijcab
+                            </td>
+                            <td>
+                                @item.plac_desc
+                            </td>
+                            <td>
+                                @item.campla_nrotrans
+                            </td>
+                            <td>
+                                @item.campla_obse
+                            </td>
+                            <td>
+                                @using (Html.BeginForm())
+                                {
+                                    <input type="hidden" name="plac_desc" value="@item.plac_desc" />
+                                    <input type="hidden" name="id_vijcab" value="@item.id_vijcab" />
+                                    <input type="hidden" name="nro_trans" value="" />
+                                   @* @if (item.vijcab_llegada)
+                                    {
+                                        <Input type="submit" class='btn btn-success btn-sm text-white' value="Aviso de llegada" disabled />
+                                    }
+                                    else
+                                    {
+                                        <Input type="submit" class='btn btn-info btn-sm text-white' value="Aviso de llegada" formaction="@Url.Action("ingresollegada", "MDViaje_Cabecera")" />
+                                    }*@
+                                    @if (item.vijcab_ingunidad)
+                                    {
+                                        <Input type="submit" class='btn btn-success btn-sm text-white' value="Ingresar Unidad" disabled />
+                                    }
+                                    else
+                                    {
+                                        <Input type="submit" class='btn btn-info btn-sm text-white' value="Ingresar Unidad" formaction="@Url.Action("ingresounidad", "MDViaje_Cabecera")" />
+                                    }
+                                    @*<Input type="submit" class='btn btn-info btn-sm text-white' value="Estacionamiento" formaction="@Url.Action("listaestacion", "MDViaje_Cabecera")" />*@
+
+                                    @*<Input type="submit" class='btn btn-info btn-sm text-white' value="Anexos" formaction="@Url.Action("listanexos", "MDViaje_Cabecera")" />*@
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblsegu').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+    </script>
+}

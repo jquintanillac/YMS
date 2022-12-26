@@ -1,0 +1,496 @@
+﻿
+@{
+    ViewData["Title"] = "Bloqueos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4 class="m-0">BLOQUEOS</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <nav>
+                            <div class="nav nav-tabs nav-fill" role="tablist">
+                                <a class="nav-item nav-link active" data-toggle="tab" href="#nav-estacion" role="tab" aria-selected="true">Estacionamiento</a>
+                                <a class="nav-item nav-link" data-toggle="tab" href="#nav-cuadrilla" role="tab" aria-controls="nav-cuadrilla" aria-selected="false">Cuadrilla</a>
+                                <a class="nav-item nav-link" data-toggle="tab" href="#nav-canal" role="tab" aria-controls="nav-canal"  aria-selected="false">Canal</a>
+                                <a class="nav-item nav-link" data-toggle="tab" href="#nav-muelle" role="tab" aria-controls="nav-muelle" aria-selected="false">Muelle</a>
+                            </div>
+                        </nav>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="nav-estacion" role="tabpanel">
+                                <div class="div-title">
+                                    <h4 class="m-0">Estacionamiento</h4>
+                                </div>
+                                <table table id="tblesta" class="table table-striped table-bordered" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="d-none">
+                                                id_Estacionamiento
+                                            </th>
+                                            <th>
+                                                Nro. Estacionamiento
+                                            </th>
+                                            <th>
+                                                Placa
+                                            </th>
+                                            <th>
+                                                Nro. Transporte
+                                            </th>
+                                            <th>
+                                                Activo / Bloqueo
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in ViewBag.estacionamiento)
+                                        {
+                                            <tr>
+                                                <td class="d-none" id="idesta">
+                                                    @item.id_estacionamiento
+                                                </td>
+                                                <td id="idesta">
+                                                    @item.esta_cod
+                                                </td>
+                                                <td>
+                                                    @item.plac_desc
+                                                </td>
+                                                <td>
+
+                                                    @item.nro_trans
+                                                </td>
+                                                <td>
+                                                    @if (item.esta_act)
+                                                    {
+                                                        <a data-toggle='modal' data-target='#ModalBloqueoEstacion' id="MdlEstacionamiento" class="btn-sm btn-success text-light" value="Procesado">Desbloquear</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a data-toggle='modal' data-target='#ModalBloqueoEstacion' id="MdlEstacionamiento" class="btn-sm btn-danger text-light" value="No Procesado">Bloquear</a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-cuadrilla" role="tabpanel">
+                                <div class="div-title">
+                                    <h4 class="m-0">Cuadrilla</h4>
+                                </div>
+                                <table id="tblcuadri" class="table table-striped table-bordered" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="d-none">
+                                                id_Cuadrilla
+                                            </th>
+                                            <th>
+                                                Nro. Cuadrilla
+                                            </th>
+                                            <th>
+                                                Placa
+                                            </th>
+                                            <th>
+                                                Nro. Transporte
+                                            </th>
+                                            <th>
+                                                Activo / Bloqueo
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in ViewBag.cuadrilla)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    @item.id_cuadrilla
+                                                </td>
+                                                <td>
+                                                    @item.cua_desc
+                                                </td>
+                                                <td>
+                                                    @item.plac_desc
+                                                </td>
+                                                <td>
+
+                                                    @item.nro_trans
+                                                </td>
+                                                <td>
+
+                                                    @if (item.cua_act)
+                                                    {
+                                                        <a data-toggle='modal' data-target='#Modalbloqueocuadrilla' id="Mdlcuadrilla" class="btn-sm btn-success text-light" value="No Procesado">Desbloquear</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a data-toggle='modal' data-target='#Modalbloqueocuadrilla' id="Mdlcuadrilla" class="btn-sm btn-danger text-light" value="No Procesado">Bloquear</a>
+                                                        <!--</form>-->
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-canal" role="tabpanel">
+                                <div class="div-title">
+                                    <h4 class="m-0">Canal</h4>
+                                </div>
+                                <table table id="tblcanal" class="table table-striped table-bordered" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="d-none">
+                                                id_Canal
+                                            </th>
+                                            <th>
+                                                Nro. Canal
+                                            </th>
+                                            <th>
+                                                Placa
+                                            </th>
+                                            <th>
+                                                Nro. Transporte
+                                            </th>
+                                            <th>
+                                                Activo
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in ViewBag.canales)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    @item.id_canal
+                                                </td>
+                                                <td>
+                                                    @item.can_cod
+                                                </td>
+                                                <td>
+                                                    @item.plac_desc
+                                                </td>
+                                                <td>
+
+                                                    @item.nro_trans
+                                                </td>
+                                                <td>
+
+                                                    @if (item.can_act)
+                                                    {
+                                                        <a data-toggle='modal' data-target='#Modalbloqueocanal' id="Mdlcanal" class="btn-sm btn-success text-light" value="No Procesado">Desbloquear</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a data-toggle='modal' data-target='#Modalbloqueocanal' id="Mdlcanal" class="btn-sm btn-danger text-light" value="No Procesado">Bloquear</a>
+                                                        <!--</form>-->
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-muelle" role="tabpanel">
+                                <div class="div-title">
+                                    <h4 class="m-0">Muelle</h4>
+                                </div>
+                                <table id="tblmuelle" class="table table-striped table-bordered" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="d-none">
+                                                Id_Muelle
+                                            </th>
+                                            <th>
+                                                Nro. Muelle
+                                            </th>
+                                            <th>
+                                                Placa
+                                            </th>
+                                            <th>
+                                                Nro. Transporte
+                                            </th>
+                                            <th>
+                                                Activo / Bloqueo
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in ViewBag.muelles)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    @item.id_muelle
+                                                </td>
+                                                <td>
+                                                    @item.mue_cod
+                                                </td>
+                                                <td>
+                                                    @item.plac_desc
+                                                </td>
+                                                <td>
+                                                    @item.nro_trans
+                                                </td>
+                                                <td>
+                                                    @if (item.mue_act)
+                                                    {
+                                                        <a data-toggle='modal' data-target='#Modalbloqueomuelle' id="Mdlmuelle" class="btn-sm btn-success text-light" value="No Procesado">Desbloquear</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a data-toggle='modal' data-target='#Modalbloqueomuelle' id="Mdlmuelle" class="btn-sm btn-danger text-light" value="No Procesado">Bloquear</a>
+                                                        <!--</form>-->
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<hr />
+<br />
+<!--Modal para confirmar el Bloqueo de Estacionamiento-->
+<div class="modal fade" id="ModalBloqueoEstacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">BLOQUEAR ESTACIONAMIENTO</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="UpdateBloqueos" asp-controller="MDViaje_Cabecera" method="post">
+                <div class="modal-body">
+                    <h5>¿Esta seguro de procesar la informacion?</h5>
+                    <input type="hidden" name="id_esta" id="id_esta" />
+                    <input type="hidden" name="tipest" id="tipest" value="ES" />
+                    <div class="form-group">
+                        <label for="comment">Observaciones:</label>
+                        <textarea class="form-control" rows="2" name="obser" id="obser"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="mensajeEliminar" class=" text-danger"></span>
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cerrar" />
+                    <input type="submit" class="btn btn-primary" value="Aceptar" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Modal para confirmar el Bloqueo de Cuadrilla-->
+<div class="modal fade" id="Modalbloqueocuadrilla" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">BLOQUEAR CUADRILLA</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="UpdateBloqueos" asp-controller="MDViaje_Cabecera" method="post">
+                <div class="modal-body">
+                    <h5>¿Esta seguro de procesar la informacion?</h5>
+                    <input type="hidden" name="id_cua" id="id_cua" />
+                    <input type="hidden" name="tipest" id="tipest" value="CU" />
+                    <div class="form-group">
+                        <label for="comment">Observaciones:</label>
+                        <textarea class="form-control" rows="2" name="obser" id="obser"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="mensajeEliminar" class=" text-danger"></span>
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cerrar" />
+                    <input type="submit" class="btn btn-primary" value="Aceptar" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Modal para confirmar el Bloqueo de Canal-->
+<div class="modal fade" id="Modalbloqueocanal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">BLOQUEAR CANAL</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="UpdateBloqueos" asp-controller="MDViaje_Cabecera" method="post">
+                <div class="modal-body">
+                    <h5>¿Esta seguro de procesar la informacion?</h5>
+                    <input type="hidden" name="id_can" id="id_can" />
+                    <input type="hidden" name="tipest" id="tipest" value="CA" />
+                    <div class="form-group">
+                        <label for="comment">Observaciones:</label>
+                        <textarea class="form-control" rows="2" name="obser" id="obser"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="mensajeEliminar" class=" text-danger"></span>
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cerrar" />
+                    <input type="submit" class="btn btn-primary" value="Aceptar" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Modal para confirmar el Bloqueo de Muelle-->
+<div class="modal fade" id="Modalbloqueomuelle" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">BLOQUEAR MUELLE</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="UpdateBloqueos" asp-controller="MDViaje_Cabecera" method="post">
+                <div class="modal-body">
+                    <h5>¿Esta seguro de procesar la informacion?</h5>
+                    <input type="hidden" name="id_mue" id="id_mue" />
+                    <input type="hidden" name="tipest" id="tipest" value="MU" />
+                    <div class="form-group">
+                        <label for="comment">Observaciones:</label>
+                        <textarea class="form-control" rows="2" name="obser" id="obser"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="mensajeEliminar" class=" text-danger"></span>
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cerrar" />
+                    <input type="submit" class="btn btn-primary" value="Aceptar" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblesta').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+            $('#tblcuadri').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+            $('#tblcanal').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+            $('#tblmuelle').DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+
+        $(document).on("click", "#MdlEstacionamiento", function () {
+            var mid_est = 0;
+            mid_est = $(this).parents("#tblesta tr").find("td").eq(0).html();
+            $('#id_esta').val(mid_est);
+            $('#ModalBloqueoEstacion').modal('show');
+        });
+
+        $(document).on("click", "#Mdlcuadrilla", function () {
+            var mid_cua = 0;
+            mid_cua = $(this).parents("#tblcuadri tr").find("td").eq(0).html();
+            $('#id_cua').val(mid_cua);
+            $('#Modalbloqueocuadrilla').modal('show');
+        });
+
+        $(document).on("click", "#Mdlcanal", function () {
+            var mid_can = 0;
+            mid_can = $(this).parents("#tblcanal tr").find("td").eq(0).html();
+            $('#id_can').val(mid_can);
+            $('#Modalbloqueocanal').modal('show');
+        });
+
+        $(document).on("click", "#Mdlmuelle", function () {
+            var mid_mue = 0;
+            mid_mue = $(this).parents("#tblmuelle tr").find("td").eq(0).html();
+            $('#id_mue').val(mid_mue);
+            $('#Modalbloqueomuelle').modal('show');
+        });
+    </script>
+}

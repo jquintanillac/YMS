@@ -1,0 +1,258 @@
+﻿@model YMSweb.Models.ViewModels.VMCamiones_Planificados
+
+@{
+    ViewData["Title"] = "Camiones Planificados Descarga";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4 class="m-0">CAMIONES PLANIFICADOS - DESCARGA</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row border-dark">
+                <input type="hidden" asp-for="id_campla" />
+                <div class="form-group col-sm-10">
+                    <h4><label class="control-label">Referencia Importacion</label></h4>
+                    <img src="~/AdminLTE-master/img/DescargaMasiva.png" class="rounded" alt="Cinque Terre" width="900" height="30" />
+                    <br />
+                    <ul>
+                        <li>1.- Se debe quitar toda la cabecera del excel.</li>
+                        <li>2.- El formato de columnas del Excel debe estar formato de celda general.</li>
+                        <li>3.- Verificar que los campos esten en el orden que se muestra en la imagen.</li>
+                        <li>4.- La placa debe existir en el sistema de lo contrario no se podra importar el archivo.</li>
+                        <li>5.- La columna TIPO UNIDAD debe estar por defecto en 1 de lo contrario el sistema no importara el archivo.</li>
+                        <li>6.- Verificar que no haya ninguna fila en blanco despues de las que se ha llenado.</li>
+                        <li>7.- Verificar que el número de transporte no se repita ya que es un codigo unico.</li>
+                    </ul>
+                </div>
+            </div>
+            <form asp-action="ImportarDescarga" asp-controller="MDCamiones_Planificados" method="post" enctype="multipart/form-data">
+                <div class="row border-dark">
+                    <div class="form-group col-sm-6">
+                        <input class="form-control form-control-sm" type="file" name="file" />
+                        @* <input type="submit" value="Importar" class="btn btn-primary btn-sm" formaction="@Url.Action("Importar","MDCamiones_Planificados")" />*@
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="formFileLg" class="form-label">     </label>
+                        <input type="submit" value="Importar" class="btn btn-primary btn-sm" />
+                    </div>
+                </div>
+            </form>
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    <input type="hidden" asp-for="id_campla" />
+                    <div class="form-group col-sm-3">
+                        <label asp-for="placa" class="control-label">Placa</label>
+                        <select class="form-control" id="placa" name="placa" asp-items="@(new SelectList(ViewBag.placas, "id_placa", "plac_desc"))">
+                            <option>Seleccione placa</option>
+                        </select>
+                        <span asp-validation-for="placa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label asp-for="campla_nrotrans" class="control-label">Nro. Transporte</label>
+                        <input class="form-control" id="dcampla_nrotrans" name="dcampla_nrotrans" />
+                        <span asp-validation-for="campla_nrotrans" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label asp-for="campla_obse" class="control-label">Observaciones</label>
+                        <input class="form-control" id="dcampla_obse" name="dcampla_obse" />
+                        <span asp-validation-for="campla_obse" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label asp-for="placa" class="control-label">Nro. de viaje</label>
+                        <select class="form-control" id="Nroviaj" name="Nroviaj" asp-items="@(new SelectList(ViewBag.Nroviaj, "id_camplacab", "id_camplacab"))">
+                            <option>Seleccione Nro. viaje</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <input type="hidden" name="placa2" id="placa2" value="@ViewData["placa"]" />
+                    <input type="hidden" name="campla_cardesc" id="campla_cardesc" value="@ViewData["carga"]" />
+                    <input type="submit" value="Agregar" class="btn btn-primary btn-sm" formaction="@Url.Action("Create","MDCamiones_Planificados")" />
+                    @*<input type="submit" value="Generar Viaje" class="btn btn-primary btn-sm" formaction="@Url.Action("GenerarViajedescarga","MDCamiones_Planificados")" />*@
+                    <input type="submit" value="Buscar" class="btn btn-primary btn-sm" formaction="@Url.Action("Descarga","MDCamiones_Planificados")" />
+                </div>
+            }
+        </div>
+        <div class="card-footer">
+            <div class="container-fluid">
+                <table table id="tblplani" class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th class="d-none">
+                                @Html.DisplayNameFor(model => model.id_campla)
+                            </th>
+                            <th class="d-none">
+                                @Html.DisplayNameFor(model => model.tiptran)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.placa)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.campla_nrotrans)
+                            </th>
+                            <th class="d-none">
+                                @Html.DisplayNameFor(model => model.campla_peso)
+                            </th>
+                            <th class="d-none">
+                                @Html.DisplayNameFor(model => model.campla_volumen)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.campla_obse)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.id_camplacab)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.camplani)
+                        {
+                            <tr>
+                                <td class="d-none">
+                                    @item.id_campla
+                                </td>
+                                <td class="d-none">
+                                    @item.tiptran
+                                </td>
+                                <td>
+                                    @item.placa
+                                </td>
+                                <td>
+                                    @item.campla_nrotrans
+                                </td>
+                                <td class="d-none">
+                                    @item.campla_peso
+                                </td>
+                                <td class="d-none">
+                                    @item.campla_volumen
+                                </td>
+                                <td>
+                                    @item.campla_obse
+                                </td>
+                                <td>
+                                    @item.id_camplacab
+                                </td>
+                                <td>
+                                    @using (Html.BeginForm())
+                                    {
+                                        <input type="hidden" name="id_campla" id="id_campla" value="@item.id_campla" />
+                                        <input type="hidden" name="id" id="id" value="@item.id_campla" />
+                                        <input type="hidden" name="placa2" id="placa2" value="@ViewData["placa"]" />
+                                        <input type="hidden" name="campla_cardesc" id="campla_cardesc" value="@ViewData["carga"]" />
+                                        @if (@item.campla_orden == 0)
+                                        {
+                                            <input type="submit" value="Ingreso a cola" class="btn btn-primary btn-sm" formaction="@Url.Action("GenerarViajedescarga", "MDCamiones_Planificados")" />
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" value="Ingreso a cola" class="btn btn-success btn-sm" disabled />
+                                        }
+                                        @*<Input type="submit" class='btn btn-danger btn-sm text-white' value="Eliminar" formaction="@Url.Action("Deletedescarga", "MDCamiones_Planificados")" />*@
+                                        <input type="submit" class='btn btn-info btn-sm text-white' value="Editar" formaction="@Url.Action("Edit","MDCamiones_Planificados")" />
+                                    }
+                                    <input type="hidden" name="id_cam" value="@item.id_campla" id="id_cam" />
+                                    <a data-toggle='modal' data-target='#Modaleliminar' id="Mdleliminar" class="btn-sm btn-danger text-light">Eliminar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<!--Modal para confirmar si eliminara el registro-->
+<div class="modal fade" id="Modaleliminar" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">¿ESTA SEGURO DE ELIMINAR EL REGISTRO?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="Deletedescarga" asp-controller="MDCamiones_Planificados" method="post">
+                <div class="modal-body">
+                    <h5 id="titestado"></h5>
+                    <input type="hidden" name="mid_idpla" id="mid_idpla" />
+                </div>
+                <div class="modal-footer">
+                    <span id="mensajeEliminar" class=" text-danger"></span>
+                    <input type="button" class="btn btn-default btn-sm" data-dismiss="modal" value="Cerrar" />
+                    <input type="submit" class="btn btn-primary btn-sm" Value="Aceptar" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblplani').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                },
+                "scrollX": true,
+                "responsive": true
+            });
+        });
+        $(function () {
+            $("#placa").select2({
+            });
+            $("#Nroviaj").select2({
+            });
+        });
+
+        $(document).on("click", "#Mdleliminar", function () {
+            var mid_campla = 0;
+            mid_campla = $(this).parents("tr").find("td").eq(0).html();
+            $('#mid_idpla').val(mid_campla);
+        });
+    </script>
+}

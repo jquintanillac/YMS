@@ -1,0 +1,119 @@
+﻿@model YMSweb.Data.Entities.MDUsuario
+<!DOCTYPE html>
+@{ Layout = null; }
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EAGLEEYE | Login</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/AdminLTE-master/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/AdminLTE-master/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/AdminLTE-master/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+</head>
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if(TempData["error"] != null)
+{
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Mensaje: </strong> @Html.Encode(TempData["Error"])
+    <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </a>
+</div>
+}
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card">
+            <!-- /.login-card-body -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-center">
+                        <b>BIENVENIDO - EAGLEEYE</b>
+                    </div>
+                </div>
+                <div class="card-body login-card-body">                    
+                    <form id="account" asp-controller="Home" asp-action="Login" asp-antiforgery="true" method="post">
+                        <br />
+                        <div class="input-group mb-3">
+                            <input asp-for="Usua_user" type="text" class="form-control" placeholder="Usuario">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-address-book"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input asp-for="Usua_pass" type="password" class="form-control" placeholder="Contraseña" >
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <dnt-captcha asp-captcha-generator-max="999999"
+                                         asp-captcha-generator-min="111111"
+                                         asp-captcha-generator-language="English"
+                                         asp-captcha-generator-display-mode="ShowDigits"
+                                         asp-use-relative-urls="true"
+                                         asp-placeholder="Ingresar Captcha"
+                                         asp-font-name="Tahoma"
+                                         asp-font-size="20"
+                                         asp-fore-color="#333333"
+                                         asp-back-color="#ccc"
+                                         asp-text-box-class="text-box form-control"
+                                         asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span></span>{0}"                                                                                                   
+                                         asp-validation-error-message="Por favor ingrese el codigo de seguridad"
+                                         asp-validation-message-class="text-danger"
+                                         asp-refresh-button-class="fas fa-redo btn-sm"
+                                         asp-use-noise="false"                                         
+                            />
+                        </div>
+                        <div class="row">
+                            <!-- /.col -->
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <br />
+                         <div class="row">
+                            <!-- /.col -->
+                            <div class="col">
+                                <a asp-controller="Home" asp-action="recuperar" class="btn btn-primary btn-block">Reestablecer contraseña</a>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <br />
+                        <br />
+                    </form>                       
+                </div>
+                <!-- /.login-card-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/AdminLTE-master/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/AdminLTE-master/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/AdminLTE-master/dist/js/adminlte.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+</body>
+</html>

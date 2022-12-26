@@ -1,0 +1,55 @@
+﻿@model YMSweb.Data.Entities.MDCamiones_Planificados
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MDCamiones_Planificados</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_tiptran)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_tiptran)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_placa)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_placa)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.campla_nrotrans)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.campla_nrotrans)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.campla_peso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.campla_peso)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.campla_volumen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.campla_volumen)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.campla_obse)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.campla_obse)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id_campla">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

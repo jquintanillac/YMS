@@ -1,0 +1,9 @@
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\bin\Release\netstandard2.1\YMSweb.common.deps.json
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\bin\Release\netstandard2.1\YMSweb.common.dll
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\bin\Release\netstandard2.1\YMSweb.common.pdb
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Release\netstandard2.1\YMSweb.common.csprojAssemblyReference.cache
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Release\netstandard2.1\YMSweb.common.AssemblyInfoInputs.cache
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Release\netstandard2.1\YMSweb.common.AssemblyInfo.cs
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Release\netstandard2.1\YMSweb.common.csproj.CoreCompileInputs.cache
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Release\netstandard2.1\YMSweb.common.dll
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.common\obj\Release\netstandard2.1\YMSweb.common.pdb

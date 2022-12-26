@@ -1,0 +1,49 @@
+﻿@model YMSweb.Data.Entities.MDChofer
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MDChofer</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.chof_nomb)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.chof_nomb)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.chof_apell)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.chof_apell)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.chof_dni)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.chof_dni)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.chof_brevette)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.chof_brevette)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.chof_act)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.chof_act)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id_chofer">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

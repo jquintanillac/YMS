@@ -1,0 +1,106 @@
+﻿@model IEnumerable<YMSweb.Data.Entities.MDAnexos>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<br />
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4 class="m-0">ANEXOS</h4>
+            </div>
+            <p>
+                <a asp-action="Create" class='btn btn-info btn-sm text-white'>Nuevo anexo</a>
+            </p>
+        </div>
+        <div class="card-body">
+            <table id="tblanexo" class="table table-striped table-bordered" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.id_anexo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.anex_desc)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.anex_cod)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.anex_act)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.id_anexo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.anex_desc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.anex_cod)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.anex_act)
+                        </td>
+                        <td>
+                            <a class='btn btn-info btn-sm text-white' asp-action="Edit" asp-route-id="@item.id_anexo">Editar</a> |
+                            <a class='btn btn-danger btn-sm text-white' asp-action="Delete" asp-route-id="@item.id_anexo">Eliminar</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblanexo').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,12 @@
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\bin\Release\netstandard2.0\YMSweb.prism.deps.json
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\bin\Release\netstandard2.0\YMSweb.prism.dll
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\bin\Release\netstandard2.0\YMSweb.prism.pdb
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\YMSweb.prism.csprojAssemblyReference.cache
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\App.xaml.g.cs
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\Views\MainPage.xaml.g.cs
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\YMSweb.prism.AssemblyInfoInputs.cache
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\YMSweb.prism.AssemblyInfo.cs
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\YMSweb.prism.csproj.CoreCompileInputs.cache
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\XamlC.stamp
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\YMSweb.prism.dll
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.prism\YMSweb.prism\obj\Release\netstandard2.0\YMSweb.prism.pdb

@@ -1,0 +1,135 @@
+﻿@model YMSweb.Models.ViewModels.VMRol_Usuario
+
+@{
+    ViewData["Title"] = "Roles - Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4>ROLES - USUARIOS</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" asp-controller="MDRol_Usuario" method="post">
+                <div class="row">
+                    <input type="hidden" asp-for="Idrol_usua" />
+                    <div class="form-group col">
+                        <label asp-for="Usuario" class="control-label"></label>
+                        <select class="form-control" id="iduser" name="iduser" asp-items="@(new SelectList(ViewBag.Usuario,"IdUsuario", "Usua_user"))">
+                            <option>Seleccione Usuario</option>
+                        </select>
+                        <span asp-validation-for="Usuario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col">
+                        <label asp-for="Rol" class="control-label"></label>
+                        <select class="form-control" id="idrol" name="idrol" asp-items="@(new SelectList(ViewBag.rol,"Idrol", "rol_desc"))">
+                            <option>Seleccione Rol</option>
+                        </select>
+                        <span asp-validation-for="Rol" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class='btn btn-info btn-sm text-white' />
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="container-fluid">
+                <div class="div-title">
+                    <h4>Lista de Usuarios</h4>
+                </div>
+                <table id="tbluserol" class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th class="d-none">
+                                @Html.DisplayNameFor(model => model.Idrol_usua)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Usuario)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nombre_Completo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Rol)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Roluser)
+                        {
+                            <tr>
+                                <td class="d-none">
+                                    @item.Idrol_usua
+                                </td>
+                                <td>
+                                    @item.Usuario
+                                </td>
+                                <td>
+                                    @item.Nombre_Completo
+                                </td>
+                                <td>
+                                    @item.Rol
+                                </td>
+                                <td>
+                                    <a class='btn btn-info btn-sm text-white' asp-action="Edit" asp-route-id="@item.Idrol_usua">Edit</a> |
+                                    @* <a asp-action="Details" asp-route-id="@item.Idrol_usua">Details</a> |*@
+                                    <a class='btn btn-danger btn-sm text-white' asp-action="Delete" asp-route-id="@item.Idrol_usua">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tbluserol').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+    </script>
+}

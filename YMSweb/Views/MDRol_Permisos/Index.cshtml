@@ -1,0 +1,402 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["Error"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<body>
+    <div class="content">
+        <div class="card-header">
+            <div class="div-title">
+                <h4 class="m-0">PERMISOS ROL - MENU</h4>
+            </div>
+            @using (Html.BeginForm())
+            {
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="container">
+                                <div class="form-group col-sm-3">
+                                    <label class="control-label">ROL</label>
+                                    <select class="form-control" id="idrol" name="idrol" asp-items="@(new SelectList(ViewBag.role, "Idrol", "rol_desc"))">
+                                        @*<option>Seleccione Rol</option>*@
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="container">
+                                <input type="submit" id="btnasig" class="btn-sm btn-info text-light" value="Seleccionar" formaction="@Url.Action("Index", "MDRol_Permisos")" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs nav-fill" role="tablist">
+                            <a class="nav-item nav-link active" data-toggle="tab" href="#nav-admin" role="tab" aria-selected="true">Administracion</a>
+                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-oper" role="tab" aria-selected="false">Operaciones</a>
+                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-prog" role="tab" aria-selected="false">Programacion </a>
+                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-segu" role="tab" aria-selected="false">Seguridad </a>
+                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-repor" role="tab" aria-selected="false">Reportes </a>
+                        </div>
+                    </nav>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="nav-admin" role="tabpanel">
+                            <div class="div-title">
+                                <h4 class="m-0">Administracion</h4>
+                            </div>
+                            <div class="container">
+                                <table id="tbladmi" class="table table-striped table-bordered" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="d-none">
+                                                id_rolperm
+                                            </th>
+                                            <th>
+                                                Descripcion
+                                            </th>
+                                            <th>
+                                                Activo
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in ViewBag.admin)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    @item.id_rolperm
+                                                </td>
+                                                <td>
+                                                    @item.submenu_desc
+                                                </td>
+                                                <td>
+                                                    <form asp-controller="MDRol_Permisos" asp-action="updatepermisos" method="post">
+                                                        <input type="hidden" name="id_rolperm" value="@item.id_rolperm">
+                                                        @if (item.rolperm_act)
+                                                        {
+                                                            <input type="submit" class="btn-sm btn-success text-light" value="Liberar" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="submit" class="btn-sm btn-info text-light" value="Asignar" />
+                                                        }
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-oper" role="tabpanel">
+                            <div class="div-title">
+                                <h4 class="m-0">Operaciones</h4>
+                            </div>
+                            <table id="tbloper" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th class="d-none">
+                                            id_rolperm
+                                        </th>
+                                        <th>
+                                            Descripcion
+                                        </th>
+                                        <th>
+                                            Activo
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.oper)
+                                    {
+                                        <tr>
+                                            <td class="d-none">
+                                                @item.id_rolperm
+                                            </td>
+                                            <td>
+                                                @item.submenu_desc
+                                            </td>
+                                            <td>
+                                                <form asp-controller="MDRol_Permisos" asp-action="updatepermisos" method="post">
+                                                    <input type="hidden" name="id_rolperm" value="@item.id_rolperm">
+                                                    @if (item.rolperm_act)
+                                                    {
+                                                        <input type="submit" class="btn-sm btn-success text-light" value="Liberar" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="submit" class="btn-sm btn-info text-light" value="Asignar" />
+                                                    }
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="nav-prog" role="tabpanel">
+                            <div class="div-title">
+                                <h4 class="m-0">Programacion</h4>
+                            </div>
+                            <table id="tblprog" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th class="d-none">
+                                            id_rolperm
+                                        </th>
+                                        <th>
+                                            Descripcion
+                                        </th>
+                                        <th>
+                                            Activo
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.prog)
+                                    {
+                                        <tr>
+                                            <td class="d-none">
+                                                @item.id_rolperm
+                                            </td>
+                                            <td>
+                                                @item.submenu_desc
+                                            </td>
+                                            <td>
+                                                <form asp-controller="MDRol_Permisos" asp-action="updatepermisos" method="post">
+                                                    <input type="hidden" name="id_rolperm" value="@item.id_rolperm">
+                                                    @if (item.rolperm_act)
+                                                    {
+                                                        <input type="submit" class="btn-sm btn-success text-light" value="Liberar" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="submit" class="btn-sm btn-info text-light" value="Asignar" />
+                                                    }
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="nav-segu" role="tabpanel">
+                            <div class="div-title">
+                                <h4 class="m-0">Seguridad</h4>
+                            </div>
+                            <table id="tblsegu" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th class="d-none">
+                                            id_rolperm
+                                        </th>
+                                        <th>
+                                            Descripcion
+                                        </th>
+                                        <th>
+                                            Activo
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.segu)
+                                    {
+                                        <tr>
+                                            <td class="d-none">
+                                                @item.id_rolperm
+                                            </td>
+                                            <td>
+                                                @item.submenu_desc
+                                            </td>
+                                            <td>
+                                                <form asp-controller="MDRol_Permisos" asp-action="updatepermisos" method="post">
+                                                    <input type="hidden" name="id_rolperm" value="@item.id_rolperm">
+                                                    @if (item.rolperm_act)
+                                                    {
+                                                        <input type="submit" class="btn-sm btn-success text-light" value="Liberar" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="submit" class="btn-sm btn-info text-light" value="Asignar" />
+                                                    }
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="nav-repor" role="tabpanel">
+                            <div class="div-title">
+                                <h4 class="m-0">Reportes</h4>
+                            </div>
+                            <table id="tblrepor" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th class="d-none">
+                                            id_rolperm
+                                        </th>
+                                        <th>
+                                            Descripcion
+                                        </th>
+                                        <th>
+                                            Activo
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.repor)
+                                    {
+                                        <tr>
+                                            <td class="d-none">
+                                                @item.id_rolperm
+                                            </td>
+                                            <td>
+                                                @item.submenu_desc
+                                            </td>
+                                            <td>
+                                                <form asp-controller="MDRol_Permisos" asp-action="updatepermisos" method="post">
+                                                    <input type="hidden" name="id_rolperm" value="@item.id_rolperm">
+                                                    @if (item.rolperm_act)
+                                                    {
+                                                        <input type="submit" class="btn-sm btn-success text-light" value="Liberar" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="submit" class="btn-sm btn-info text-light" value="Asignar" />
+                                                    }
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tbladmi').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+
+            $('#tbloper').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+
+            $('#tblprog').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+
+            $('#tblsegu').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+
+            $('#tblrepor').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+    </script>
+}

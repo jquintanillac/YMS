@@ -1,0 +1,171 @@
+﻿@model YMSweb.Models.ViewModels.VMPlaca
+
+@{
+    ViewData["Title"] = "Placa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />        
+</head>
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <div class="div-title">
+                        <h4>REGISTRO DE PLACAS</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" asp-controller="MDPlacas" method="post">
+                        <div class="row">
+                            <input type="hidden" asp-for="id_placa" />
+                            @*<div class="form-group col-6">
+            <label asp-for="Chofer" class="control-label"></label>
+            <select class="form-control" id="id_chofer" name="id_chofer" asp-items="@(new SelectList(ViewBag.chofer,"id_chofer", "chof_dni"))">
+                <option>Seleccione Chofer</option>
+            </select>
+            <span asp-validation-for="Chofer" class="text-danger"></span>
+        </div>*@
+                            <div class="form-group col-6">
+                                <label asp-for="Transportista" class="control-label"></label>
+                                <select class="form-control" id="id_transp" name="id_transp" asp-items="@(new SelectList(ViewBag.transportista,"id_transp", "transp_desc"))">
+                                    <option>Seleccione Transportista</option>
+                                </select>
+                                <span asp-validation-for="Transportista" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-6">
+                                <label asp-for="Tipo" class="control-label"></label>
+                                <select class="form-control" id="id_tipo" name="id_tipo" asp-items="@(new SelectList(ViewBag.tipounidad,"id_tipuni", "tipuni_desc"))">
+                                    <option>Seleccione tipo de unidad</option>
+                                </select>
+                                <span asp-validation-for="Tipo" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-4">
+                                <label asp-for="Placa" class="control-label"></label>
+                                <input class="form-control" id="Placa" name="Placa" />
+                                <span asp-validation-for="Placa" class="text-danger"></span>
+                            </div>                  
+                            <div class="form-group col-2">
+                                <label class="form-check-label"></label><br />
+                                <input class="form-check-input" type="checkbox" id="activa" name="activa" value="true" checked /> @Html.DisplayNameFor(model => model.Activa)
+                            </div>
+                            <div class="form-group col-2">
+                                <label class="form-check-label"></label><br />
+                                <input class="form-check-input" type="checkbox" id="libre" name="libre" value="true" checked /> @Html.DisplayNameFor(model => model.Libre)
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <input type="submit" value="Guardar" class='btn btn-info btn-sm text-white' />
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="container-fluid">
+                        <table table id="tblplaca" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th class="d-none">
+                                        @Html.DisplayNameFor(model => model.id_placa)
+                                    </th>
+                                    @*<th>
+                                        @Html.DisplayNameFor(model => model.Chofer)
+                                    </th>*@
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Transportista)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Placa)
+                                    </th>
+                                    <th class="d-none">
+                                        @Html.DisplayNameFor(model => model.Activa)
+                                    </th>
+                                    <th class="d-none">
+                                        @Html.DisplayNameFor(model => model.Libre)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.placas)
+                                {
+                                    <tr>
+                                        <td class="d-none">
+                                            @item.id_placa
+                                        </td>
+                                        @*<td>
+                                            @item.Chofer
+                                        </td>*@
+                                        <td>
+                                            @item.Transportista
+                                        </td>
+                                        <td>
+                                            @item.Placa
+                                        </td>
+                                        <td class="d-none">
+                                            @item.Activa
+                                        </td>
+                                        <td class="d-none">
+                                            @item.Libre
+                                        </td>
+                                        <td>
+                                            <a class='btn btn-info btn-sm text-white' asp-action="Edit" asp-route-id="@item.id_placa">Editar</a> |
+                                            <a class='btn btn-danger btn-sm text-white' asp-action="Delete" asp-route-id="@item.id_placa">Eliminar</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+@section Scripts {   
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblplaca').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+
+        $(function () {
+            $("#id_chofer").select2({
+            });
+            $("#id_transp").select2({
+            });
+        });
+
+    </script>
+}

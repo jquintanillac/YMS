@@ -1,0 +1,96 @@
+﻿@model YMSweb.Models.ViewModels.VMViaje_Detalle
+
+@{
+    ViewData["Title"] = "Viaje Detalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<br />
+<div class="container-fluid">
+    <fieldset>
+        <legend>REGISTRO DE TRANSPORTES</legend>
+    </fieldset>
+    <h2>Placa: @ViewData["placa"]</h2> 
+</div>
+<hr style="color: #0056b2" />
+<br />
+<br />
+<div>
+    <table table id="tbldetalle" class="table table-striped table-bordered" style="width: 100%">
+        <thead>
+            <tr>
+                <th class="d-none">
+                    @Html.DisplayNameFor(model => model.id_vijcab)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.campla_nrotrans)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.campla_peso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.campla_volumen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tiptran_desc)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.viajedetalle)
+            {
+                <tr>
+                    <td class="d-none">
+                        @item.id_vijcab
+                    </td>
+                    <td>
+                        @item.campla_nrotrans
+                    </td>
+                    <td>
+                        @item.campla_peso
+                    </td>
+                    <td>
+                        @item.campla_volumen
+                    </td>
+                    <td>
+                        @item.tiptran_desc
+                    </td>
+                    <td>
+                        <a class='btn btn-info btn-sm text-white' asp-action="Validar" asp-route-id="@item.id_vijcab">Validar</a> |
+                        <a class='btn btn-danger btn-sm text-white' asp-action="Delete" asp-route-id="@item.id_vijcab">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tbldetalle').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+    </script>
+}

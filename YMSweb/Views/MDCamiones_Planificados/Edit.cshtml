@@ -1,0 +1,81 @@
+﻿@model YMSweb.Data.Entities.MDCamiones_Planificados
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4>EDITAR CAMIONES PLANIFICADOS</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    @using (Html.BeginForm())
+                    {
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" name="id" id="id" asp-for="id_campla" />
+                        <input type="hidden" name="campla_cardesc" id="campla_cardesc" value="@ViewData["carga"]" />
+                        <div class="form-group col-sm-10">
+                            <select class="form-control" id="placa" name="placa" asp-items="@(new SelectList(ViewBag.placas, "id_placa", "plac_desc"))">
+                                <option>Seleccione placa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="campla_nrotrans" class="control-label"></label>
+                            <input asp-for="campla_nrotrans" id="campla_nrotrans" name="campla_nrotrans" class="form-control" />
+                            <span asp-validation-for="campla_nrotrans" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="campla_peso" class="control-label"></label>
+                            <input asp-for="campla_peso" id="campla_peso" name="campla_peso" class="form-control" />
+                            <span asp-validation-for="campla_peso" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="campla_volumen" class="control-label"></label>
+                            <input asp-for="campla_volumen" id="campla_volumen" name="campla_volumen" class="form-control" />
+                            <span asp-validation-for="campla_volumen" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="campla_obse" class="control-label"></label>
+                            <input asp-for="campla_obse" id="campla_obse" name="campla_obse" class="form-control" />
+                            <span asp-validation-for="campla_obse" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="submit" value="Guardar" class='btn btn-info btn-sm text-white' formaction="@Url.Action("Editconfirmar", "MDCamiones_Planificados")" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-8">
+                    <img src="~/AdminLTE-master/img/selva.jpg" width="600" height="280" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">       
+        $(function () {
+            $("#placa").select2({
+
+            });
+        });
+    </script>
+}

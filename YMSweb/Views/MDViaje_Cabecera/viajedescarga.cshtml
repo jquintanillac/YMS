@@ -1,0 +1,269 @@
+﻿@model YMSweb.Models.ViewModels.VMviajes
+
+@{
+    ViewData["Title"] = "Viajes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+
+</head>
+<br />
+<div class="container">
+    <div class="card">
+        <!--<div class="card-header">
+        <div class="div-title">
+            <h4 class="m-0">REGISTRO DE VIAJES - DESCARGA</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container">
+            <table table id="tblviaje" class="table table-striped table-bordered" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.campla_orden)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.id_camplacab)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.placa)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nro_Trans)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Fec_gen)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.campla_obse)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.viajes)
+                    {
+                        <tr>
+                            <td>
+                                @item.campla_orden
+                            </td>
+                            <td>
+                                @item.id_camplacab
+                            </td>
+                            <td>
+                                @item.placa
+                            </td>
+                            <td>
+                                @item.Nro_Trans
+                            </td>
+                            <td>
+                                @item.Fec_gen
+                            </td>
+                            <td>
+                                @item.campla_obse
+                            </td>
+                            <td>
+                                <form asp-action="viajedescarga" asp-controller="MDViaje_Cabecera" method="post">
+                                    <input type="hidden" name="placa" value="@item.placa" />
+                                    <input type="hidden" name="id_camplacab" value="@item.id_camplacab" />
+                                    <input type="submit" value="Escoger" class="btn btn-info btn-sm" />
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+        <div class="card-footer">
+            <div class="container-fluid">
+                <div class="div-title">
+                    <h4 class="m-0">REGISTRO DE TRANSPORTES - DESCARGA</h4>
+                </div>
+                <!-- <h2>Placa: @ViewData["placa"]</h2>-->
+                <br />
+                <form asp-action="viajedescarga" asp-controller="MDViaje_Cabecera" method="post">
+                    <input type="submit" value="Refrescar" class="btn btn-info btn-sm" />
+                </form>
+            </div>
+            <div class="container-fluid">
+                <table table id="tbldetalle" class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Operacion</th>
+                            <th class="d-none">
+                                Nro. Viaje
+                            </th>
+                            <th>
+                                Emp. Transportista
+                            </th>
+                            <th>
+                                Placa
+                            </th>
+                            <th>
+                                Nro. Transporte
+                            </th>
+                            <th>
+                                Peso
+                            </th>
+                            <th>
+                                Volumen
+                            </th>
+                            <th class="d-none">
+                                Fecha Facturacion
+                            </th>
+                            <th class="d-none">
+                                Fecha Picking
+                            </th>
+                            <th>
+                                Tipo Transporte
+                            </th>
+                            <th>
+                                Observacion
+                            </th>
+                            <th>
+                                Estado Camion
+                            </th>
+                            <th>
+                                Canales
+                            </th>
+                            <th>
+                                Nro. Fase
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.viajedetalle)
+                        {
+                            <tr>
+                                <td>
+                                    @using (Html.BeginForm())
+                                    {
+                                        <input type="hidden" name="cardesg" id="cardesg" value="@ViewData["cardesg"]" />
+                                        <input type="hidden" name="id" id="id" value="@item.id_vijcab" />
+                                        <input type="submit" class="btn-sm btn-info text-light" value="Validar" formaction="@Url.Action("Validar", "MDViaje_Detalle")" />
+                                    }
+                                </td>
+                                <td class="d-none">
+                                    @item.id_vijcab
+                                </td>
+                                <td>
+                                    @item.transp_desc
+                                </td>
+                                <td>
+                                    @item.plac_desc
+                                </td>
+                                <td>
+                                    @item.campla_nrotrans
+                                </td>
+                                <td>
+                                    @item.campla_peso
+                                </td>
+                                <td>
+                                    @item.campla_volumen
+                                </td>
+                                <td class="d-none">
+                                    @if (@item.vijdet_fecini != "N")
+                                    {
+                                        @item.vijdet_fecini
+                                    }
+                                    else
+                                    {
+                                        @using (Html.BeginForm())
+                                        {
+                                            <input type="hidden" name="id_vijcab" value="@item.id_vijcab" id="id_vijcab">
+                                            <input type="hidden" name="tipcab" value="D" id="tipcab">
+                                            <input type="submit" class="btn-sm btn-danger" value="Fecha facturacion" formaction="@Url.Action("UpdateFacturacion", "MDViaje_Cabecera")" />
+                                        }
+                                    }
+                                </td>
+                                <td class="d-none">
+                                    @if (@item.vijcab_fecpick != "N")
+                                    {
+                                        @item.vijcab_fecpick
+                                    }
+                                    else
+                                    {
+                                        @using (Html.BeginForm())
+                                        {
+                                            <input type="hidden" name="id_vijcab" value="@item.id_vijcab" id="id_vijcab">
+                                            <input type="hidden" name="tipcab" value="D" id="tipcab">
+                                            <input type="submit" class="btn-sm btn-danger" value="Picking generado" formaction="@Url.Action("UpdatePicking", "MDViaje_Cabecera")" />
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @item.tiptran_desc
+                                </td>
+                                <td>
+                                    @item.campla_obse
+                                </td>
+                                <td>
+                                    @item.estcam_desc
+                                </td>
+                                <td>
+                                    @item.canales
+                                </td>
+                                <td>
+                                    @item.campla_fase
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblviaje').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                },
+                "scrollX": true,
+                "responsive": true
+            });
+            $('#tbldetalle').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                },
+                "scrollX": true,
+                "responsive": true
+            });
+        });
+    </script>
+}

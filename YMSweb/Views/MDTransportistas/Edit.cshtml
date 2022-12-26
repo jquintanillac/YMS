@@ -1,0 +1,62 @@
+﻿@model YMSweb.Data.Entities.MDTransportista
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4>EDITAR TRANSPORTISTA</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="id_transp" />
+                        <div class="form-group">
+                            <label asp-for="transp_desc" class="control-label"></label>
+                            <input asp-for="transp_desc" class="form-control" />
+                            <span asp-validation-for="transp_desc" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="transp_ruc" class="control-label"></label>
+                            <input asp-for="transp_ruc" class="form-control" />
+                            <span asp-validation-for="transp_ruc" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox">Activo</label><br />
+                            <input type="checkbox" asp-for="transp_act" value="true">
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox">Libre</label><br />
+                            <input type="checkbox" asp-for="transp_libre" value="true">
+                        </div>
+                        <div class="form-group">
+                            <input class='btn btn-info btn-sm text-white' type="submit" value="Guardar" />
+                            <a class='btn btn-info btn-sm text-white' asp-action="Index">Regresar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,59 @@
+﻿@model YMSweb.Data.Entities.MDCamiones_Planificados
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>MDCamiones_Planificados</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="id_tiptran" class="control-label"></label>
+                <input asp-for="id_tiptran" class="form-control" />
+                <span asp-validation-for="id_tiptran" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_placa" class="control-label"></label>
+                <input asp-for="id_placa" class="form-control" />
+                <span asp-validation-for="id_placa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="campla_nrotrans" class="control-label"></label>
+                <input asp-for="campla_nrotrans" class="form-control" />
+                <span asp-validation-for="campla_nrotrans" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="campla_peso" class="control-label"></label>
+                <input asp-for="campla_peso" class="form-control" />
+                <span asp-validation-for="campla_peso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="campla_volumen" class="control-label"></label>
+                <input asp-for="campla_volumen" class="form-control" />
+                <span asp-validation-for="campla_volumen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="campla_obse" class="control-label"></label>
+                <input asp-for="campla_obse" class="form-control" />
+                <span asp-validation-for="campla_obse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,290 @@
+﻿@model IEnumerable<YMSweb.Models.ViewModels.VMReporte1>
+
+@{
+    ViewData["Title"] = "Reportes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.bootstrap4.min.css" />
+</head>
+<br />
+<div class="container">
+    <div class="card">
+        <form asp-action="Index" asp-controller="Reportes" method="post">
+            <div class="card-header">
+                <div class="div-title">
+                    <h4 class="m-0">REPORTE DE PLACAS - VIAJES</h4>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label class="control-label">Fecha Inicio:</label>
+                        <input type="date" id="fecini" name="fecini" class="form-control" />
+                    </div>
+                    <div class="form-group col">
+                        <label class="control-label">Fecha fin:</label>
+                        <input type="date" id="fecfin" name="fecfin" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label class="control-label">Nro. Viaje:</label>
+                        <input type="text" id="nro_viaje" name="nro_viaje" class="form-control" />
+                    </div>
+                    <div class="form-group col">
+                        <label class="control-label">Nro. Transporte:</label>
+                        <input type="text" id="nro_trans" name="nro_trans" class="form-control" />
+                    </div>
+                </div>                                    
+                <div class="row">
+                    <input type="submit" value="Ver Reporte" class='btn btn-info btn-sm text-white' />
+                </div>
+            </div>
+        </form>
+        <div class="card-body">
+            <table id="tblreporte" class="table table-striped table-bordered" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.placa)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nro_viaje)
+                        </th>                        
+                        <th>
+                            @Html.DisplayNameFor(model => model.empresa)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.volumen)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.peso)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.tipo_transporte)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.hora_propuesta)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.fase)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.fecha_viaje)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.vijcab_fecllegada)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.vijcab_fecunidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nro_transportes)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.estcam_desc)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.vijdet_fecini)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.vijdet_fecfin)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nro_canales)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.can_fecini)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.can_fecfin)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nro_muelles)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.muell_fecini)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.muell_fecfin)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nro_estacionamiento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.estacion_fecini)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.estacion_fecfin)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nro_cuadrilla)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.cuadri_fecini)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.cuadri_fecfin)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nro_montacarga)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.monta_fecini)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.monta_fecfin)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.placa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nro_viaje)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empresa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.volumen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.peso)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tipo_transporte)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.hora_propuesta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fase)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fecha_viaje)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vijcab_fecllegada)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vijcab_fecunidad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nro_transportes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estcam_desc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vijdet_fecini)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vijdet_fecfin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nro_canales)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.can_fecini)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.can_fecfin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nro_muelles)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.muell_fecini)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.muell_fecfin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nro_estacionamiento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estacion_fecini)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estacion_fecfin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nro_cuadrilla)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cuadri_fecini)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cuadri_fecfin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nro_montacarga)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.monta_fecini)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.monta_fecfin)
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>    
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblreporte').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                "scrollX": true,
+                "responsive": true,
+                "dom": 'Bfrtilp',
+                "buttons": [
+                    {
+                        "extend": 'excelHtml5',
+                        "text": '<i class="fas fa-file-excel"></i>',
+                        "titleAttr": 'Exportar a excel',
+                        "className": 'btn btn-success'
+                    },
+                    //{
+                    //    "extend": 'pdfHtml5',
+                    //    "text": '<i class="fas fa-file-pdf"></i>',
+                    //    "titleAttr": 'Exportar a PDF',
+                    //    "className": 'btn btn-danger'
+                    //},
+                ]
+            });
+        });
+    </script>
+}

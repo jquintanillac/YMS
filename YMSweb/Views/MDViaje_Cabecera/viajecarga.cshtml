@@ -1,0 +1,849 @@
+﻿@model YMSweb.Models.ViewModels.VMviajes
+
+@{
+    ViewData["Title"] = "Viajes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["Error"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4 class="m-0">PLACAS EN TRATAMIENTO EWM</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <table table id="tblcuadro" class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th class="d-none">
+                               ESTADO
+                            </th>
+                            <th>
+                               ESTADO
+                            </th>
+                            <th>
+                               CANTIDAD
+                            </th>
+                            <th>
+                               OPCIONES
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.cuadro)
+                        {
+                            <tr>
+                                <td class="d-none">
+                                    @item.id_estcam
+                                </td>
+                                <td>
+                                    @item.cuad_concep
+                                </td>
+                                <td>
+                                    @item.cuad_cant
+                                </td>
+                                 <td>
+                                   <form asp-action="Cuadro" asp-controller="MDViaje_Cabecera" method="post">
+                                        <input type="hidden" name="id_estcam" value="@item.id_estcam" />                                     
+                                        <input type="submit" value="Ver" formtarget="_blank" class="btn btn-info btn-sm" />
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--<div class="card-header">
+            <div class="div-title">
+                <h4 class="m-0">REGISTRO DE VIAJES - CARGA</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <table table id="tblviaje" class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.id_camplacab)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.placa)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Nro_Trans)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Fec_gen)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.campla_obse)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.viajes)
+                        {
+                            <tr>
+                                <td>
+                                    @item.id_camplacab
+                                </td>
+                                <td>
+                                    @item.placa
+                                </td>
+                                <td>
+                                    @item.Nro_Trans
+                                </td>
+                                <td>
+                                    @item.Fec_gen
+                                </td>
+                                <th>
+                                    @item.campla_obse
+                                </th>
+                                <td>
+                                    <form asp-action="viajecarga" asp-controller="MDViaje_Cabecera" method="post">
+                                        <input type="hidden" name="placa" value="@item.placa" />
+                                        <input type="hidden" name="id_camplacab" value="@item.id_camplacab" />
+                                        <input type="submit" value="Escoger" class="btn btn-info btn-sm" />
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>-->
+        <div class="card-footer">
+            <div class="container-fluid">
+                <div class="div-title">
+                    <h4 class="m-0">REGISTRO DE TRANSPORTES - CARGA</h4>
+                </div>
+                <!--<h2>Placa: @ViewData["placa"]</h2>-->
+                <br />
+                <form asp-action="viajecarga" asp-controller="MDViaje_Cabecera" method="post">
+                    <input type="submit" value="Refrescar" class="btn btn-info btn-sm" />
+                </form>
+                <nav>
+                    <div class="nav nav-tabs nav-fill" role="tablist">
+                        <a class="nav-item nav-link active" data-toggle="tab" href="#nav-general" role="tab" aria-selected="true">General</a>
+                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-ewm" role="tab" aria-selected="false">Transportes EWM</a>
+                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-sap" role="tab" aria-selected="false">Transportes IM</a>
+                    </div>
+                </nav>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="nav-general" role="tabpanel">
+                        <div class="div-title">
+                            <h4 class="m-0">General</h4>
+                        </div>
+                        <div class="container-fluid">
+                            <table id="tbldetalle_gene" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Operacion</th>
+                                        <th class="d-none">
+                                            Nro. Viaje
+                                        </th>
+                                        <th>
+                                            Emp. Transportista
+                                        </th>
+                                        <th>
+                                            Placa
+                                        </th>
+                                        <th>
+                                            Nro. Transporte
+                                        </th>
+                                        <th>
+                                            Peso
+                                        </th>
+                                        <th>
+                                            Volumen
+                                        </th>
+                                        <th>
+                                            Fecha guia de remision
+                                        </th>
+                                        <th>
+                                            Fecha Picking
+                                        </th>
+                                        <th>
+                                            Proc. Preparacion
+                                        </th>
+                                        <th>
+                                            Canal
+                                        </th>
+                                        <th>
+                                            Canales
+                                        </th>
+                                        <th>
+                                            Fase
+                                        </th>
+                                        <th>
+                                            Prep. completa
+                                        </th>
+                                        <th>
+                                            Recojo de documentos
+                                        </th>
+                                        <th>
+                                            Tipo Transporte
+                                        </th>
+                                        <th>
+                                            Observacion
+                                        </th>
+                                        <th>
+                                            Estado Camion
+                                        </th>
+                                        <th>
+                                            Nro. Fase
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.viajedetalle)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @using (Html.BeginForm())
+                                                {
+                                                    <input type="hidden" name="cardesg" id="cardesg" value="@ViewData["cardesg"]" />
+                                                    <input type="hidden" name="id" id="id" value="@item.id_vijcab" />
+                                                    <input type="submit" class="btn-sm btn-info text-light" value="Validar" formaction="@Url.Action("Validar", "MDViaje_Detalle")" />
+                                                }
+                                            </td>
+                                            <td class="d-none id_vijcab">
+                                                @item.id_vijcab
+                                            </td>
+                                            <td>
+                                                @item.transp_desc
+                                            </td>
+                                            <td class="idplaca">
+                                                @item.plac_desc
+                                            </td>
+                                            <td class="nrotrans">
+                                                @item.campla_nrotrans
+                                            </td>
+                                            <td>
+                                                @item.campla_peso
+                                            </td>
+                                            <td>
+                                                @item.campla_volumen
+                                            </td>
+                                            <td>
+                                                @if (@item.vijdet_fecini != "N")
+                                                {
+                                                    @item.vijdet_fecini
+                                                }
+                                                else
+                                                {
+                                                    @using (Html.BeginForm())
+                                                    {
+                                                        <input type="hidden" name="id_vijcab" value="@item.id_vijcab" id="id_vijcab">
+                                                        <input type="hidden" name="tipcab" value="C" id="tipcab">
+                                                        <input type="submit" class="btn-sm btn-danger" value="Fecha facturacion" formaction="@Url.Action("UpdateFacturacion", "MDViaje_Cabecera")" />
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (@item.vijcab_fecpick != "N")
+                                                {
+                                                    @item.vijcab_fecpick
+                                                }
+                                                else
+                                                {
+                                                    @using (Html.BeginForm())
+                                                    {
+                                                        <input type="hidden" name="id_vijcab" value="@item.id_vijcab" id="id_vijcab">
+                                                        <input type="hidden" name="tipcab" value="C" id="tipcab">
+                                                        <input type="submit" class="btn-sm btn-danger" value="Picking Generado" formaction="@Url.Action("UpdatePicking", "MDViaje_Cabecera")" />
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.Estprepa)
+                                                {
+                                                    @item.fecprepa
+                                                }
+                                                else
+                                                {
+                                                    @using (Html.BeginForm())
+                                                    {
+                                                        <input type="hidden" name="mid_vijcab" value="@item.id_vijcab" id="mid_vijcab">
+                                                        <input type="hidden" name="id_cab" value="@item.id_vijcab" id="id_cab">
+                                                        <input type="hidden" name="mid_estcam" value="3" id="mid_estcam">
+                                                        <input type="hidden" name="mid_vijdet" value="0" id="mid_vijdet">
+                                                        <input type="submit" class="btn-sm btn-danger" value="Proc. de preparacion" formaction="@Url.Action("Updateprepa", "MDViaje_Cabecera")" />
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.Estprepa)
+                                                {
+                                                    @item.fecprepa
+                                                }
+                                                else
+                                                {
+                                                    <input type="submit" class="btn-sm btn-danger mdlCanal" data-toggle="modal" data-target="#canal" value="Canal" />
+                                                }
+                                            </td>
+                                            <td>
+                                                @item.canales
+                                            </td>
+                                            <td>
+                                                @if (@item.campla_fase != "0")
+                                                {
+                                                    @item.campla_fase
+                                                }
+                                                else
+                                                {
+                                                    @using (Html.BeginForm())
+                                                    {
+                                                        <input type="hidden" name="id_cab" value="@item.id_vijcab" id="id_cab">
+                                                        <input type="text" name="id_fase" id="id_fase">
+                                                        <input type="submit" class="btn-sm btn-danger mdlfase" value="Fase" formaction="@Url.Action("Updatefase", "MDViaje_Cabecera")" />
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.Estaprepcom)
+                                                {
+                                                    @item.fecprepcom
+                                                }
+                                                else
+                                                {
+                                                    @using (Html.BeginForm())
+                                                    {
+                                                        <input type="hidden" name="mid_vijcab" value="@item.id_vijcab" id="mid_vijcab">
+                                                        <input type="hidden" name="id_cab" value="@item.id_vijcab" id="id_cab">
+                                                        <input type="hidden" name="mid_estcam" value="4" id="mid_estcam">
+                                                        <input type="hidden" name="mid_vijdet" value="0" id="mid_vijdet">
+                                                        <input type="submit" class="btn-sm btn-danger" value="Preparacion completa" formaction="@Url.Action("UpdatePrepcomp", "MDViaje_Cabecera")" />
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.Estrecojo)
+                                                {
+                                                    @item.Fecinirecojo
+                                                }
+                                                else
+                                                {
+                                                    @using (Html.BeginForm())
+                                                    {
+                                                        <input type="hidden" name="mid_vijcab" value="@item.id_vijcab" id="mid_vijcab">
+                                                        <input type="hidden" name="id_cab" value="@item.id_vijcab" id="id_cab">
+                                                        <input type="hidden" name="mid_estcam" value="9" id="mid_estcam">
+                                                        <input type="hidden" name="mid_vijdet" value="0" id="mid_vijdet">
+                                                        <input type="submit" class="btn-sm btn-danger" value="Recojo de documentos" formaction="@Url.Action("UpdateRecojo", "MDViaje_Cabecera")" />
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @item.tiptran_desc
+                                            </td>
+                                            <td>
+                                                @item.campla_obse
+                                            </td>
+                                            <td>
+                                                @item.estcam_desc
+                                            </td>
+                                            <td>
+                                                @item.campla_fase
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-ewm" role="tabpanel">
+                        <div class="div-title">
+                            <h4 class="m-0">Transporte EWM</h4>
+                        </div>
+                        <div class="container-fluid">
+                            <table id="tbldetalle_ewm" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Operacion
+                                        </th>
+                                        <th class="d-none">
+                                            Nro. Viaje
+                                        </th>
+                                        <th>
+                                            Placa
+                                        </th>
+                                        <th>
+                                            Nro. Transporte
+                                        </th>
+                                        <th>
+                                            Peso
+                                        </th>
+                                         <th>
+                                            Cliente
+                                        </th>                                        
+                                        <th>
+                                            Fase
+                                        </th>                                       
+                                        <th>
+                                            Canal
+                                        </th>
+                                        <th>
+                                            Canales
+                                        </th>
+                                        <th>
+                                            Proceso
+                                        </th>
+                                        <th>
+                                            Canal Cerrado
+                                        </th>
+                                        <th>
+                                            Tipo Camion
+                                        </th>
+                                         <th>
+                                            Fecha Propuesta
+                                        </th>                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.viajedetalle_ewm)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @using (Html.BeginForm())
+                                                {
+                                                    <input type="hidden" name="cardesg" id="cardesg" value="@ViewData["cardesg"]" />
+                                                    <input type="hidden" name="id" id="id" value="@item.id_vijcab" />
+                                                    <input type="submit" class="btn-sm btn-info text-light" value="Validar" formaction="@Url.Action("Validar", "MDViaje_Detalle")" />
+                                                }
+                                            </td>
+                                            <td class="d-none id_vijcab">
+                                                @item.id_vijcab
+                                            </td>
+                                            <td class="idplaca">
+                                                @item.plac_desc
+                                            </td>
+                                            <td class="nrotrans">
+                                                @item.campla_nrotrans
+                                            </td>
+                                            <td>
+                                                @item.campla_peso
+                                            </td>
+                                            <td>
+                                                @item.campla_obse
+                                            </td>
+                                            <td>
+                                                @if (@item.campla_fase != "0")
+                                                {
+                                                    @item.campla_fase
+                                                }
+                                                else
+                                                {
+                                                    @using (Html.BeginForm())
+                                                    {
+                                                        <input type="hidden" name="id_cab" value="@item.id_vijcab" id="id_cab">
+                                                        <input type="text" name="id_fase" id="id_fase">
+                                                        <input type="submit" class="btn-sm btn-danger mdlfase" value="Fase" formaction="@Url.Action("Updatefase", "MDViaje_Cabecera")" />
+                                                    }
+                                                }
+                                            </td>                                          
+                                            <td>
+                                                @if (item.Estprepa)
+                                                {
+                                                    @item.fecprepa
+                                                }
+                                                else
+                                                {
+                                                    <input type="submit" class="btn-sm btn-danger mdlCanal" data-toggle="modal" data-target="#canal" value="Canal" />
+                                                }
+                                            </td>
+                                            <td>
+                                                @item.canales
+                                            </td>                                         
+                                            <td>
+                                                @item.estcam_desc
+                                            </td>
+                                            <td>
+                                                @item.vijdet_fecfin_canal
+                                            </td>
+                                            <td>
+                                                @item.tiptran_desc
+                                            </td>                                                                                                                                                                     
+                                            <td>
+                                                @item.vijcab_horapropuesta
+                                            </td>                                                                                                                                                                                                            
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-sap" role="tabpanel">
+                        <div class="div-title">
+                            <h4 class="m-0">Transporte IM</h4>
+                        </div>
+                        <div class="container-fluid">
+                           <table id="tbldetalle_sap" class="table table-striped table-bordered" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Operacion</th>
+                                        <th class="d-none">
+                                            Nro. Viaje
+                                        </th>
+                                        <th>
+                                            Emp. Transportista
+                                        </th>
+                                        <th>
+                                            Placa
+                                        </th>
+                                        <th>
+                                            Nro. Transporte
+                                        </th>
+                                        <th>
+                                            Peso
+                                        </th>
+                                        <th>
+                                            Volumen
+                                        </th>
+                                        <th>
+                                            Fecha guia de remision
+                                        </th>
+                                        <th>
+                                            Fecha Picking
+                                        </th>
+                                        <th>
+                                            Recojo de documentos
+                                        </th>
+                                        <th>
+                                            Tipo Transporte
+                                        </th>
+                                        <th>
+                                            Observacion
+                                        </th>
+                                        <th>
+                                            Estado Camion
+                                        </th>
+                                        <th>
+                                            Canales
+                                        </th>
+                                        <th>
+                                            Nro. Fase
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.viajedetalle_sap)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @using (Html.BeginForm())
+                                            {
+                                                <input type="hidden" name="cardesg" id="cardesg" value="@ViewData["cardesg"]" />
+                                                <input type="hidden" name="id" id="id" value="@item.id_vijcab" />
+                                                <input type="submit" class="btn-sm btn-info text-light" value="Validar" formaction="@Url.Action("Validar", "MDViaje_Detalle")" />
+                                            }
+                                        </td>
+                                        <td class="d-none idvijcab">
+                                            @item.id_vijcab
+                                        </td>
+                                        <td>
+                                            @item.transp_desc
+                                        </td>
+                                        <td>
+                                            @item.plac_desc
+                                        </td>
+                                        <td class="nrotrans">
+                                            @item.campla_nrotrans
+                                        </td>
+                                        <td>
+                                            @item.campla_peso
+                                        </td>
+                                        <td>
+                                            @item.campla_volumen
+                                        </td>
+                                        <td>
+                                            @if (@item.vijdet_fecini != "N")
+                                            {
+                                                @item.vijdet_fecini
+                                            }
+                                            else
+                                            {
+                                                @using (Html.BeginForm())
+                                                {
+                                                    <input type="hidden" name="id_vijcab" value="@item.id_vijcab" id="id_vijcab">
+                                                    <input type="hidden" name="tipcab" value="C" id="tipcab">
+                                                    <input type="submit" class="btn-sm btn-danger" value="Fecha facturacion" formaction="@Url.Action("UpdateFacturacion", "MDViaje_Cabecera")" />
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (@item.vijcab_fecpick != "N")
+                                            {
+                                                @item.vijcab_fecpick
+                                            }
+                                            else
+                                            {
+                                                @using (Html.BeginForm())
+                                                {
+                                                    <input type="hidden" name="id_vijcab" value="@item.id_vijcab" id="id_vijcab">
+                                                    <input type="hidden" name="tipcab" value="C" id="tipcab">
+                                                    <input type="submit" class="btn-sm btn-danger" value="Generar Picking" formaction="@Url.Action("UpdatePicking", "MDViaje_Cabecera")" />
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.Estrecojo)
+                                            {
+                                                @item.Fecinirecojo
+                                            }
+                                            else
+                                            {
+                                                @using (Html.BeginForm())
+                                                {
+                                                    <input type="hidden" name="mid_vijcab" value="@item.id_vijcab" id="mid_vijcab">
+                                                    <input type="hidden" name="id_cab" value="@item.id_vijcab" id="id_cab">
+                                                    <input type="hidden" name="mid_estcam" value="9" id="mid_estcam">
+                                                    <input type="hidden" name="mid_vijdet" value="0" id="mid_vijdet">
+                                                    <input type="submit" class="btn-sm btn-danger" value="Recojo de documentos" formaction="@Url.Action("UpdateRecojo", "MDViaje_Cabecera")" />
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.tiptran_desc
+                                        </td>
+                                        <td>
+                                            @item.campla_obse
+                                        </td>
+                                        <td>
+                                            @item.estcam_desc
+                                        </td>
+                                        <td>
+                                            @item.canales
+                                        </td>
+                                        <td>
+                                            @item.campla_fase
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_PartialIngresarCanal" />
+<br />
+<br />
+<br />
+<br />
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ///*-------- Boton listar canal -------*///
+            $(".mdlCanal").on("click", function () {
+                var nrotrans = "";
+                var idplaca = "";
+                var idvijcab = "";
+                nrotrans = $(this).parent().parent().children(".nrotrans").text();
+                idplaca = $(this).parent().parent().children(".idplaca").text();
+                idvijcab = $(this).parent().parent().children(".id_vijcab").text();
+                nrotrans = $.trim(nrotrans);
+                idplaca = $.trim(idplaca);
+                idvijcab = $.trim(idvijcab);
+                $(".nrotrans").val(nrotrans);
+                $(".placa").val(idplaca);
+                $(".vijcab").val(idvijcab);
+               // $("#canal").modal('show');
+            });
+            // cerrar canal
+            $(" .close2").click(function () {
+                $("#canal").modal('hide');
+                location.reload();
+            });
+            //boton de Postback
+            $(".btnpostback").click(function (e) {
+                e.preventDefault();
+                var idcanal = 0;
+                var id_vijcab = 0;
+                var placa = "";
+                var nrotrans = "";
+                var urlbase = "";
+                //urlbase = window.location.protocol + "/" + window.location.host + "/MDViaje_Cabecera/Updatecanal";
+                urlbase = "@Url.Action("Updatecanal", "MDViaje_Cabecera")";
+                idcanal = $(this).parent().find('.idcanal').val();
+                id_vijcab = $(this).parent().find('.vijcab').val();
+                placa = $(this).parent().find('.placa').val();
+                nrotrans = $(this).parent().find('.nrotrans').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Updatecanal", "MDViaje_Cabecera")",
+                   // url: "/MDViaje_Cabecera/Updatecanal",
+                    data: { id_canal: idcanal, mplac_desc: placa, id_vijcab: id_vijcab, nro_trans: nrotrans },
+                    dataType: "text",
+                    success: function (msg) {
+                        swal('Mensaje de confirmacion', 'Canal agregado', 'success');
+                        console.log(msg);
+                    },
+                    error: function (req, status, error) {
+                        console.log(msg);
+                    }
+                });
+
+            });
+
+             //boton de liberar canal
+            $(".btnlib").click(function (e) {
+                e.preventDefault();
+                var idcanal = 0;
+                var id_vijcab = 0;
+                var placa = "";
+                var nrotrans = "";
+                var urlbase = "";
+                //urlbase = window.location.protocol + "/" + window.location.host + "/MDViaje_Cabecera/Updatecanal";
+                urlbase = "@Url.Action("Updatecanal", "MDViaje_Cabecera")";
+                idcanal = $(this).parent().find('.idcanal').val();
+                id_vijcab = $(this).parent().find('.vijcab').val();
+                placa = $(this).parent().find('.placa').val();
+                nrotrans = $(this).parent().find('.nrotrans').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Updatecanal", "MDViaje_Cabecera")",
+                   // url: "/MDViaje_Cabecera/Updatecanal",
+                    data: { id_canal: idcanal, mplac_desc: placa, id_vijcab: id_vijcab, nro_trans: nrotrans },
+                    dataType: "text",
+                    success: function (msg) {
+                        console.log(msg);
+                    },
+                    error: function (req, status, error) {
+                        console.log(msg);
+                    }
+                });
+
+            });
+
+            $('#tblviaje').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                },
+                "scrollX": true,
+                "responsive": true
+            });
+            $('#tbldetalle_gene').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                },
+                "scrollX": true,
+                "responsive": true
+            });
+
+            $('#tbldetalle_ewm').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                },
+                "scrollX": true,
+                "responsive": true
+            });
+            $('#tbldetalle_sap').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                },
+                "scrollX": true,
+                "responsive": true
+            });
+
+            $('#tblcanal').DataTable({
+                "pageLength": 50,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrar pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontraron registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                    }
+
+                }
+            });
+        });
+    </script>
+}

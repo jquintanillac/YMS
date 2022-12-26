@@ -1,0 +1,13 @@
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\bin\iPhoneSimulator\Release\YMSweb.cross.ios.exe
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\bin\iPhoneSimulator\Release\Xamarin.Essentials.dll
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\bin\iPhoneSimulator\Release\Xamarin.Essentials.pdb
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\actool\_PartialAppManifest.items
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\actool\_BundleResourceWithLogicalName.items
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\ibtool\_BundleResourceWithLogicalName.items
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\coremlc\_PartialAppManifest.items
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\coremlc\_BundleResourceWithLogicalName.items
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\optimized\
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\YMSweb.cross.ios.csprojAssemblyReference.cache
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\YMSweb.cross.ios.csproj.CoreCompileInputs.cache
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\YMSweb.cross.ios.csproj.CopyComplete
+D:\Proyectos Personales\PatioCamiones\AppPatioCamiones\YMSweb\YMSweb\YMSweb.cross.ios\obj\iPhoneSimulator\Release\YMSweb.cross.ios.exe

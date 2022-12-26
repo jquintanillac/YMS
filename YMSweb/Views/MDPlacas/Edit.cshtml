@@ -1,0 +1,70 @@
+﻿@model YMSweb.Models.ViewModels.VMPlaca
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="div-title">
+                    <h4>EDITAR DE PLACA</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" asp-controller="MDPlacas" method="post">
+                    <div class="row">
+                        <input type="hidden" id="id" name="id" value="@ViewData["id"]" asp-for="id_placa" />
+                        @*<div class="form-group col-6">
+                            <label asp-for="Chofer" class="control-label"></label>
+                            <select class="form-control" id="id_chofer" name="id_chofer" asp-items="@(new SelectList(ViewBag.chofer,"id_chofer", "chof_dni"))">
+                                <option>Seleccione Chofer</option>
+                            </select>
+                            <span asp-validation-for="Chofer" class="text-danger"></span>
+                        </div>*@
+                        <div class="form-group col-6">
+                            <label asp-for="Transportista" class="control-label"></label>
+                            <select class="form-control" id="id_transp" name="id_transp" asp-items="@(new SelectList(ViewBag.transportista,"id_transp", "transp_desc"))">
+                                <option>Seleccione Transportista</option>
+                            </select>
+                            <span asp-validation-for="Transportista" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label asp-for="Tipo" class="control-label"></label>
+                            <input class="form-control" id="Tipo" name="Tipo" />
+                            <span asp-validation-for="Tipo" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-2">
+                            <label class="form-check-label"></label><br />
+                            <input class="form-check-input" type="checkbox" id="activa" name="activa" value="true" checked /> @Html.DisplayNameFor(model => model.Activa)
+                        </div>
+                        <div class="form-group col-2">
+                            <label class="form-check-label"></label><br />
+                            <input class="form-check-input" type="checkbox" id="libre" name="libre" value="true" checked /> @Html.DisplayNameFor(model => model.Libre)
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group">       
+                        <input type="submit" value="Guardar" class='btn btn-info btn-sm text-white' /> |
+                        <a class='btn btn-info btn-sm text-white' asp-action="Index">Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

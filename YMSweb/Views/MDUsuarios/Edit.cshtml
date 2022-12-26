@@ -1,0 +1,41 @@
+﻿@model YMSweb.Data.Entities.MDUsuario
+
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4 class="m-0">EDITAR USUARIOS</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <form asp-action="Editconfirmar" asp-controller="MDUsuarios" method="post">
+                <partial name="_UsuarioEditar" />
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class='btn btn-info btn-sm text-white' />
+                    <a class='btn btn-info btn-sm text-white' asp-action="Index">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr style="color: #0056b2" />
+<br />
+<br />
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

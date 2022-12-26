@@ -1,0 +1,48 @@
+﻿@model YMSweb.Data.Entities.MDCuadrilla
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="container">
+    <div class="card">
+        <div class="card-header">  
+            <div class="div-title">
+                <h4 class="m-0">CREAR CUADRILLA</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="cua_desc" class="control-label"></label>
+                        <input asp-for="cua_desc" class="form-control" />
+                        <span asp-validation-for="cua_desc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="cua_cod" class="control-label"></label>
+                        <input asp-for="cua_cod" class="form-control" />
+                        <span asp-validation-for="cua_cod" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox">Activo</label><br />
+                        <input type="checkbox" asp-for="cua_act" value="true" checked>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox">Libre</label><br />
+                        <input type="checkbox" asp-for="cua_libre" value="true" checked>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class='btn btn-info btn-sm text-white' />
+                        <a class='btn btn-info btn-sm text-white' asp-action="Index">Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

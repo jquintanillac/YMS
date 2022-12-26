@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Ingresar Fecha";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var message = ViewBag.SuccessMsg;
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+</head>
+<br />
+<!--Validacion para desplegar Mensaje despues del POST-->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Mensaje: </strong> @Html.Encode(TempData["success"])
+        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </a>
+    </div>
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="div-title">
+                <h4>INGRESAR FECHA PROPUESTA - ALMACEN</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+            <div class="row">
+                <div class="col-md-4">
+                    <label>FECHA PROPUESTA: </label>
+                    <br />
+                    <input type="datetime-local" name="fecalma" id="fecalma" />
+                </div>
+                <div class="col-md-8">
+                    <img src="~/AdminLTE-master/img/almacen.jpg" width="600" height="280" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <input type="hidden" name="id_cab" id="id_cab" value="@ViewData["id_vijcab"]" />
+                    <input type="submit" value="Guardar" class='btn btn-info btn-sm text-white' formaction="@Url.Action("Updatefecalmacen", "MDViaje_Detalle")" />
+                    <a class='btn btn-info btn-sm text-white' asp-action="Validar" asp-controller="MDViaje_Detalle" asp-route-id="@ViewData["id_vijcab"]">Regresar</a>
+                </div>                
+            </div>
+            }
+        </div>
+    </div>
+</div>

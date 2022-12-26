@@ -1,0 +1,49 @@
+﻿@model YMSweb.Data.Entities.MDPlaca
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MDPlaca</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_chofer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_chofer)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id_transp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id_transp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.plac_desc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.plac_desc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.plac_act)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.plac_act)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.plac_libre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.plac_libre)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id_placa">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
